@@ -22,9 +22,11 @@ jobs:
 
       - name: Get current prices
         run: |
+          echo "---set credentials---"
           git config credential.helper 'cache --timeout=120'
           git config user.email "eltonkola@gmail.com"
           git config user.name "Deployment Bot"
+          echo "---get data---"
           TODAYS_DATE=$(date +%Y-%m-%d)
           BRANCH_NAME="demo_update_$TODAYS_DATE"
           git checkout -b BRANCH_NAME
