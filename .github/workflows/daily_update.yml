@@ -17,7 +17,7 @@ jobs:
        uses: technote-space/create-pr-action@v2
        with:
          EXECUTE_COMMANDS: |
-           curl -0 currentprice.json https://api.coindesk.com/v1/bpi/currentprice.json
+           curl -O currentprice.json https://api.coindesk.com/v1/bpi/currentprice.json
          COMMIT_MESSAGE: 'bot: update currency'
          COMMIT_NAME: 'GitHub Actions'
          COMMIT_EMAIL: 'eltonkola@gmail.com'
