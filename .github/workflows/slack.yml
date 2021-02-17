@@ -4,6 +4,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  
+  prova-slack:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Notify slack
+      env:
+        SLACK_BOT_TOKEN: ${{ secrets.SLACK_BOT_TOKEN }}
+      uses: pullreminders/slack-action@master
+      with:
+        args: '{\"channel\":\"C0P8R3YCT\",\"text\":\"Hello world\"}'
+
   success-notification:
     runs-on: ubuntu-latest
     steps:
