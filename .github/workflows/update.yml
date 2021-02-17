@@ -36,14 +36,7 @@ jobs:
           git commit -m "update currencty $TODAYS_DATE"
           echo '---git push it ----'
           git push -f --set-upstream origin $BRANCH_NAME
-          echo Create pr!      
-          BODY="{
-              \"head\": \"${BRANCH_NAME}\",
-              \"base\": \"main\",
-              \"title\": \"bot pr: ${TODAYS_DATE}\",
-              \"body\": \"this is an automaticlly created pr\"
-          }"
-          echo "To post $BODY"  
-          curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '${BODY}'
+          echo Create pr!       
+          curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '{"title":"automatic update", "body": "This is an automated pr", "head":"${BRANCH_NAME}","base":"main"}'
         
           echo Done!  
