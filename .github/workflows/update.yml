@@ -39,8 +39,11 @@ jobs:
           echo Create pr!      
           BODY="{
               \"head\": \"${BRANCH_NAME}\",
-              \"base\": \"main\"
+              \"base\": \"main\",
+              \"title\": \"bot pr: ${TODAYS_DATE}\",
+              \"body\": \"this is an automaticlly created pr\"
           }"
           echo "To post $BODY"  
-          curl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '$BODY'
+          curl -v --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H "Accept: application/vnd.github.v3+json" -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '${BODY}'
+          
           echo Done!  
