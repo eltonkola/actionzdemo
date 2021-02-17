@@ -36,12 +36,11 @@ jobs:
           git commit -m "update currencty $TODAYS_DATE"
           echo '---git push it ----'
           git push -f --set-upstream origin $BRANCH_NAME
-          #git push -f -q https://${DOCS_GITHUB_TOKEN}@github.com/eltonkola/androidz.git prod
           echo Create pr!      
           BODY="{
               \"head\": \"${BRANCH_NAME}\",
               \"base\": \"main\"
           }"
           echo "To post $BODY"  
-          curl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/eltonkola/actionzdemo/pulls -d $BODY
+          curl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '$BODY'
           echo Done!  
