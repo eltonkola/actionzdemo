@@ -30,14 +30,20 @@ jobs:
           git checkout -b $BRANCH_NAME
           rm currentprice.json
           curl https://api.coindesk.com/v1/bpi/currentprice.json > currentprice.json
-          git add .
-          git commit -m "update currencty $TODAYS_DATE"
-          echo '---git push it ----'
-          git push -f --set-upstream origin $BRANCH_NAME
-          echo Create pr!       
-          curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
-            -H "Accept: application/vnd.github.v3+json" \
-            -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
-            -d "{\"title\":\"automatic update\", \"body\": \"This is an automated pr\", \"head\":\"${BRANCH_NAME}\",\"base\":\"main\"}"
-        
+          if [ -z "$(git status --porcelain)" ]; then 
+            echo "Working directory clean"
+          else 
+            echo "Uncommitted changes, create a pr"
+
+            git add .
+            git commit -m "update currencty $TODAYS_DATE"
+            echo '---git push it ----'
+            git push -f --set-upstream origin $BRANCH_NAME
+            echo Create pr!       
+            curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
+              -d "{\"title\":\"automatic update\", \"body\": \"This is an automated pr\", \"head\":\"${BRANCH_NAME}\",\"base\":\"main\"}"
+          fi
+
           echo Done!  
