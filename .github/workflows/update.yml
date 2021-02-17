@@ -35,6 +35,6 @@ jobs:
           echo '---git push it ----'
           git push -f --set-upstream origin $BRANCH_NAME
           echo Create pr!       
-          curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '{"title":"automatic update", "body": "This is an automated pr", "head":"${BRANCH_NAME}","base":"main"}'
+          curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '{"title":"automatic update", "body": "This is an automated pr", "head":"$BRANCH_NAME","base":"main"}'
         
           echo Done!  
