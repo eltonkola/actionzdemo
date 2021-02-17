@@ -44,6 +44,7 @@ jobs:
               \"body\": \"this is an automaticlly created pr\"
           }"
           echo "To post $BODY"  
-          curl -v --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H "Accept: application/vnd.github.v3+json" -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '${BODY}'
+          #curl -v --header 'authorization: Bearer ${{ secrets.GITHUB_TOKEN }}' -H "Accept: application/vnd.github.v3+json" -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '${BODY}'
+          curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" -H "Accept: application/vnd.github.v3+json" -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls -d '{"title":" bla bla bla ", "body": "body", "head":"demo_update_2021-02-17","base":"main"}'
           
           echo Done!  
