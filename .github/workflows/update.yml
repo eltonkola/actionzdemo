@@ -22,5 +22,37 @@ jobs:
 
       - name: Get current prices
         run: |
+          git config credential.helper 'cache --timeout=120'
+          git config user.email "eltonkola@gmail.com"
+          git config user.name "Deployment Bot"
+          TODAYS_DATE=$(date +%Y-%m-%d)
+          BRANCH_NAME="demo_update_$TODAYS_DATE"
+          git checkout -b BRANCH_NAME
           curl -O currentprice.json https://api.coindesk.com/v1/bpi/currentprice.json
+          git add .
+          git commit -m "update currencty $TODAYS_DATE"
+          echo '---git push it ----'
+          git push -f BRANCH_NAME
           echo Done!
+
+
+
+  
+          git config user.email "<email>"
+          git config user.name "Deployment Bot"
+          echo '---git status ----'
+          git status
+          echo '---git checkout prod ----'
+          git checkout prod
+          mv -f quick.json api/quick.json
+          mv -f full.json api/full.json
+          echo '---git add files ----'
+          git add api/quick.json
+          git add api/full.json
+          echo '---git commit ----'
+          git commit --allow-empty -m "Generating snippets"
+          # Push quietly to prevent showing the token in log
+          echo '---git push it ----'
+          git push --set-upstream origin BRANCH_NAME
+          #git push -f -q https://${DOCS_GITHUB_TOKEN}@github.com/eltonkola/androidz.git prod
+          
