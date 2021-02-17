@@ -21,5 +21,5 @@ jobs:
          COMMIT_MESSAGE: 'bot: update currency'
          COMMIT_NAME: 'GitHub Actions'
          COMMIT_EMAIL: 'eltonkola@gmail.com'
-         PR_BRANCH_NAME: 'chore-npm-update-${PR_ID}'
+         PR_BRANCH_NAME: 'price-update-${PR_ID}'
          PR_TITLE: 'bot: update currency'
