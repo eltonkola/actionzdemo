@@ -4,7 +4,7 @@ on:
  pull_request:
    types: [opened, synchronize, reopened, closed]
 
-name: Update packages
+name: Daily update
 jobs:
  release:
    name: Update npm packages
