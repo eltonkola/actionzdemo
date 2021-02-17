@@ -30,7 +30,8 @@ jobs:
           TODAYS_DATE=$(date +%Y-%m-%d)
           BRANCH_NAME="demo_update_$TODAYS_DATE"
           git checkout -b BRANCH_NAME
-          curl -O currentprice.json https://api.coindesk.com/v1/bpi/currentprice.json
+          rm currentprice.json
+          curl https://api.coindesk.com/v1/bpi/currentprice.json > currentprice.json
           git add .
           git commit -m "update currencty $TODAYS_DATE"
           echo '---git push it ----'
