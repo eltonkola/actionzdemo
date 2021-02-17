@@ -35,7 +35,7 @@ jobs:
           git add .
           git commit -m "update currencty $TODAYS_DATE"
           echo '---git push it ----'
-          git push --set-upstream origin $BRANCH_NAME
+          git push -f --set-upstream origin $BRANCH_NAME
           #git push -f -q https://${DOCS_GITHUB_TOKEN}@github.com/eltonkola/androidz.git prod
           echo Create pr!          
           BODY = '{"head":"$BRANCH_NAME","base":"master"}'
