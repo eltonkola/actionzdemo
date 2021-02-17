@@ -39,8 +39,8 @@ jobs:
           #git push -f -q https://${DOCS_GITHUB_TOKEN}@github.com/eltonkola/androidz.git prod
           echo Create pr!      
           BODY="{
-              \"head\": \"actionzdemo:${BRANCH_NAME}\",
-              \"base\": \"actionzdemo:main\"
+              \"head\": \"${BRANCH_NAME}\",
+              \"base\": \"main\"
           }"
           echo "To post $BODY"  
           curl -X POST -H "Accept: application/vnd.github.v3+json" https://api.github.com/repos/eltonkola/actionzdemo/pulls -d $BODY
