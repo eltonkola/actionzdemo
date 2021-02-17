@@ -38,6 +38,6 @@ jobs:
           curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
             -H "Accept: application/vnd.github.v3+json" \
             -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
-            -d '{"title":"automatic update", "body": "This is an automated pr", "head":"${{BRANCH_NAME}}","base":"main"}'
+            -d "{\"title\":\"automatic update\", \"body\": \"This is an automated pr\", \"head\":\"${BRANCH_NAME}\",\"base\":\"main\"}"
         
           echo Done!  
