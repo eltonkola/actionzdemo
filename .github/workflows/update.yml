@@ -39,7 +39,7 @@ jobs:
           #git push -f -q https://${DOCS_GITHUB_TOKEN}@github.com/eltonkola/androidz.git prod
           echo Create pr!      
           BODY="{
-              \"head\": $BRANCH_NAME,
+              \"head\": \"${BRANCH_NAME}\",
               \"base\": \"master\"
           }"
           echo "To post $BODY"  
