@@ -13,11 +13,11 @@ jobs:
    name: Download currency
    runs-on: ubuntu-latest
    steps:
-     - name: Update npm packages
+     - name: Download latest rates
        uses: technote-space/create-pr-action@v2
        with:
          EXECUTE_COMMANDS: |
-           curl -s https://api.coindesk.com/v1/bpi/currentprice.json
+           curl -0 currentprice.json https://api.coindesk.com/v1/bpi/currentprice.json
          COMMIT_MESSAGE: 'bot: update currency'
          COMMIT_NAME: 'GitHub Actions'
          COMMIT_EMAIL: 'eltonkola@gmail.com'
