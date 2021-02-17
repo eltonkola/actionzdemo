@@ -1,0 +1,22 @@
+on:
+ schedule:
+   - cron: 0 0 * * *
+ pull_request:
+   types: [opened, synchronize, reopened, closed]
+
+name: Update packages
+jobs:
+ release:
+   name: Update npm packages
+   runs-on: ubuntu-latest
+   steps:
+     - name: Update npm packages
+       uses: technote-space/create-pr-action@v2
+       with:
+         EXECUTE_COMMANDS: |
+           curl https://api.coindesk.com/v1/bpi/currentprice.json
+         COMMIT_MESSAGE: 'bot: update currency'
+         COMMIT_NAME: 'GitHub Actions'
+         COMMIT_EMAIL: 'eltonkola@gmail.com'
+         PR_BRANCH_NAME: 'chore-npm-update-${PR_ID}'
+         PR_TITLE: 'bot: update currency'
