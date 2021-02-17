@@ -22,5 +22,5 @@ jobs:
 
       - name: Get current prices
         run: |
-          curl -O currentprice.json https://api.coindesk.com/v1/bpi/currentprice.json,
+          curl -O currentprice.json https://api.coindesk.com/v1/bpi/currentprice.json
           echo Done!
