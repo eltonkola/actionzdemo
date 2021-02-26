@@ -5,8 +5,8 @@ name: CI-full
 
 # Controls when the action will run. 
 on:
-  schedule:
-  - cron: '0 9 * * *'  # every day at 9
+ # schedule:
+ # - cron: '0 9 * * *'  # every day at 9
   workflow_dispatch:
 
 jobs:
