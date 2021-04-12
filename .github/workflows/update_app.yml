@@ -25,8 +25,9 @@ jobs:
           git pull
           git checkout production
           git checkout main
-          DIFF_DESCRIPTION = $(env -i git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative production..main)
-           
+          export DIFF_DESCRIPTION = 'git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative production..main'
+          echo "$DIFF_DESCRIPTION"
+                 
           TODAYS_DATE=$(date +%Y-%m-%d)
           BRANCH_NAME="publish_app_$TODAYS_DATE"
           git checkout -b $BRANCH_NAME
