@@ -1,0 +1,14 @@
+ext.configuration = [
+        applicationId : "com.eltonkola.demoz",
+        versionMajor : 22,
+        versionMinor : 0,
+        versionPatch : 555,
+        versionCode : 1000,
+        minimumSdkVersion : 21,
+        targetSdkVersion : 30,
+        compileSdkVersion : 30
+]
+
+ext.buildVersionName = {
+    return configuration.versionMajor.toString() +  "." + configuration.versionMinor.toString() +  "." + configuration.versionPatch.toString()
+}
