@@ -22,8 +22,10 @@ jobs:
           git config user.email "eltonkola@gmail.com"
           git config user.name "Deployment Bot"
           echo "---get data---"
-         
-          DIFF_DESCRIPTION = $(env -i git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative production--main)
+          git pull
+          git checkout production
+          git checkout main
+          DIFF_DESCRIPTION = $(env -i git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative production..main)
            
           TODAYS_DATE=$(date +%Y-%m-%d)
           BRANCH_NAME="publish_app_$TODAYS_DATE"
