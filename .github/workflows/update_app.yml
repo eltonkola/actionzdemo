@@ -25,7 +25,8 @@ jobs:
           git pull
           git checkout production
           git checkout main
-          export DIFF_DESCRIPTION = 'git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative production..main'
+          #export DIFF_DESCRIPTION = 'git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative production..main'
+          IFS='' export DIFF_DESCRIPTION=`git log production..main --oneline --pretty=tformat:"%h %B"`
           echo "$DIFF_DESCRIPTION"
                  
           TODAYS_DATE=$(date +%Y-%m-%d)
