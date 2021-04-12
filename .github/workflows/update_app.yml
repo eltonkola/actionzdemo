@@ -1,0 +1,55 @@
+name: UpdateApplication
+
+on:
+ # schedule:
+ # - cron: '0 9 * * *'  # every day at 9
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Create production pr
+        run: |
+          echo "---set credentials---"
+          git config credential.helper 'cache --timeout=120'
+          git config user.email "eltonkola@gmail.com"
+          git config user.name "Deployment Bot"
+          echo "---get data---"
+         
+          DIFF_DESCRIPTION = ${git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative production..main}
+           
+          TODAYS_DATE=$(date +%Y-%m-%d)
+          BRANCH_NAME="publish_app_$TODAYS_DATE"
+          git checkout -b $BRANCH_NAME
+        
+            echo "Uncommitted changes, create a pr"
+            git add .
+            git commit -m "update currencty $TODAYS_DATE"
+            echo '---git push it ----'
+            git push -f --set-upstream origin $BRANCH_NAME
+            echo Create pr!       
+            curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
+              -d "{\"title\":\"automatic update\", \"body\": \"Application update automatic pr\n ${DIFF_DESCRIPTION}  \", \"head\":\"${BRANCH_NAME}\",\"base\":\"production\"}"
+          echo Done!
+          
+      - name: Slack report
+        uses: kpritam/slack-job-status-action@v1
+        with:
+            job-status: ${{ job.status }}
+            slack-bot-token: ${{ secrets.SLACK_BOT_TOKEN }}
+            channel: general
+
+
+
+ 
+ 
+ 
