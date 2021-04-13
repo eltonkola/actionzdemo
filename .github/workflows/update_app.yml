@@ -91,7 +91,7 @@ jobs:
           POST_BODY=$(cat <<EOF
           {
            "title": "App update ${TODAYS_DATE}", 
-           "body": "Update changelog: \n ${DIFF_DESCRIPTION}", 
+           "body": "Update changelog", #: \n ${DIFF_DESCRIPTION}", 
            "head": "${BRANCH_NAME}",
            "base": "production"
           }
@@ -105,7 +105,7 @@ jobs:
           curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
-              -d "$POST_BODY"
+              -d '$POST_BODY'
       
           echo Done!
           
