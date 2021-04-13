@@ -91,13 +91,12 @@ jobs:
           POST_BODY=$(cat <<EOF
           {
            "title": "App update ${TODAYS_DATE}", 
-           "body": "This is an automated pr, updating changelog ${DIFF_DESCRIPTION}", 
+           "body": "Update changelog: \n ${DIFF_DESCRIPTION}", 
            "head": "${BRANCH_NAME}",
            "base": "production"
           }
           EOF
           )
-        
           
           echo "*************POST_BODY***************"
           echo $POST_BODY
