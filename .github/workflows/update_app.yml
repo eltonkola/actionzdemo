@@ -105,7 +105,8 @@ jobs:
           curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
-              -d '$POST_BODY'
+              -d "{\"title\":\"Lokalise translation update ${TODAYS_DATE}\", \"body\": \"This is an automated pr, updating the translations from lokalise, on date ${TODAYS_DATE}\", \"head\":\"${BRANCH_NAME}\",\"base\":\"development\"}"
+       
       
           echo Done!
           
