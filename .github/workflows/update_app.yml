@@ -75,7 +75,8 @@ jobs:
           #****************************
           #create new pr on production
           
-          DIFF_DESCRIPTION=$(git log --pretty=format:%s production..main 2>&1)
+          #DIFF_DESCRIPTION=$(git log --pretty=format:%s production..main 2>&1)
+          DIFF_DESCRIPTION="version bump Update update_app.yml"
 
           echo "*************DIFF_DESCRIPTION***************"
           echo $DIFF_DESCRIPTION
