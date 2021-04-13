@@ -42,7 +42,7 @@ jobs:
           echo "old VERSION_MAJOR: $VERSION_MAJOR"
           echo "old VERSION_MINOR: $VERSION_MINOR"
 
-          ASPECTED_MONTH=$((x=52,y=12,z=x%y))
+          ASPECTED_MONTH=$((x=VERSION_MAJOR,y=12,z=x%y))
 
           if [ ASPECTED_MONTH==TODAYS_MONTH ]
           then
@@ -56,12 +56,10 @@ jobs:
           echo "new VERSION_MINOR: $VERSION_MINOR"
 
           filename="demoApp/buildsystem/config.gradle"
-          echo "current dir:"
-          echo pwd
-          if test -f "$FILE"; then
-           echo "$FILE exists."
+          if test -f "$filename"; then
+           echo "$filename exists."
           else
-           echo "$FILE does not exist."
+           echo "$filename does not exist."
           fi
 
           #write the new version on the config file
@@ -70,6 +68,7 @@ jobs:
           sed -i  "4s/.*/$replaceMajor/" $filename
           sed -i  "5s/.*/$replaceMinor/" $filename
 
+          git add $filename
           git commit -m "version bump"
           git push
           
