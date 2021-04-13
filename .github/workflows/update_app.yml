@@ -90,7 +90,8 @@ jobs:
           curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
-              -d "{\"title\":\"application update pr - ${TODAYS_DATE} \", \"body\": \"Application update automatic pr.  ${DIFF_DESCRIPTION} \", \"head\":\"${BRANCH_NAME}\",\"base\":\"production\"}"
+              -d "{\"title\":\"App update ${TODAYS_DATE}\", \"body\": \"This is an automated pr, updating changelog ${DIFF_DESCRIPTION}\", \"head\":\"${BRANCH_NAME}\",\"base\":\"production\"}"
+      
           echo Done!
           
       - name: Slack report
