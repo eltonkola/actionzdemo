@@ -95,7 +95,7 @@ jobs:
           curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
-              -d "{\"title\":\"Application release ${TODAYS_DATE}\", \"body\": \"Changelog: $DIFF_DESCRIPTION\", \"head\":\"${BRANCH_NAME}\",\"base\":\"production\"}"
+              -d "{\"title\":\"Application release ${TODAYS_DATE}\", \"body\": \"Changelog: \\n some changes here \", \"head\":\"${BRANCH_NAME}\",\"base\":\"production\"}"
        
       
           echo Done!
