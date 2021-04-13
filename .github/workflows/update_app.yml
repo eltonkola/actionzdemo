@@ -55,7 +55,7 @@ jobs:
           echo "new VERSION_MAJOR: $VERSION_MAJOR"
           echo "new VERSION_MINOR: $VERSION_MINOR"
 
-          filename="./demoApp/buildsystem/config.gradle"
+          filename="demoApp/buildsystem/config.gradle"
           echo "current dir:"
           echo pwd
           if test -f "$FILE"; then
@@ -67,8 +67,8 @@ jobs:
           #write the new version on the config file
           replaceMajor="        versionMajor : $VERSION_MAJOR,"
           replaceMinor="        versionMinor : $VERSION_MINOR,"
-          sed -i '' "4s/.*/$replaceMajor/" $filename
-          sed -i '' "5s/.*/$replaceMinor/" $filename
+          sed -i  "4s/.*/$replaceMajor/" $filename
+          sed -i  "5s/.*/$replaceMinor/" $filename
 
           git commit -m "version bump"
           git push
