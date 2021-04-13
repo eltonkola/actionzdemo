@@ -75,7 +75,7 @@ jobs:
           #****************************
           #create new pr on production
           
-          #DIFF_DESCRIPTION=$(git log --pretty=format:%s production..main 2>&1)
+          #DIFF_DESCRIPTION=$(git log --pretty=format:%s production..main)
           DIFF_DESCRIPTION="version bump Update update_app.yml"
 
           echo "*************DIFF_DESCRIPTION***************"
@@ -89,7 +89,7 @@ jobs:
           git push -f --set-upstream origin $BRANCH_NAME
           echo Create pr!       
           
-          CHANGES=$DIFF_DESCRIPTION
+          CHANGES="${DIFF_DESCRIPTION}"
           
           curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
