@@ -25,7 +25,50 @@ jobs:
           git pull
           git checkout production
           git checkout main
-          #export DIFF_DESCRIPTION = 'git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset' --abbrev-commit --date=relative production..main'
+          
+          #update version and push
+          
+          #get todays month
+          TODAYS_MONTH=$(date +%m)
+          #get current versions
+          VERSION_MAJOR=$(./demoApp/gradlew -p demoApp -q app:printVersionMajor | tail -n 1)
+          VERSION_MINOR=$(./demoApp/gradlew -p demoApp -q app:printVersionMinor | tail -n 1)
+
+          #****************************
+          #update versions
+          echo "*********** current values ***********"
+          echo "Aspected month is: $ASPECTED_MONTH"
+          echo "Current month is: $TODAYS_MONTH"
+          echo "old VERSION_MAJOR: $VERSION_MAJOR"
+          echo "old VERSION_MINOR: $VERSION_MINOR"
+
+          ASPECTED_MONTH=$((x=52,y=12,z=x%y))
+
+          if [ ASPECTED_MONTH==TODAYS_MONTH ]
+          then
+            VERSION_MINOR=$((VERSION_MINOR+1))
+          else
+            VERSION_MAJOR=$((VERSION_MAJOR+1))
+          fi
+
+          echo "*********** update ***********"
+          echo "new VERSION_MAJOR: $VERSION_MAJOR"
+          echo "new VERSION_MINOR: $VERSION_MINOR"
+
+          filename="demoApp/buildsystem/config.gradle"
+
+          #write the new version on the config file
+          replaceMajor="        versionMajor : $VERSION_MAJOR,"
+          replaceMinor="        versionMinor : $VERSION_MINOR,"
+          sed -i '' "4s/.*/$replaceMajor/" $filename
+          sed -i '' "5s/.*/$replaceMinor/" $filename
+
+          git commit -m "version bump"
+          git push
+          
+          #****************************
+          #create new pr on production
+          
           DIFF_DESCRIPTION=$(git log production..main --oneline --pretty=tformat:"%h %B" 2>&1)
           echo "$DIFF_DESCRIPTION"
                  
@@ -33,13 +76,9 @@ jobs:
           BRANCH_NAME="publish_app_$TODAYS_DATE"
           git checkout -b $BRANCH_NAME
         
-            echo "Uncommitted changes, create a pr"
-            git add .
-            git commit -m "update currencty $TODAYS_DATE"
-            echo '---git push it ----'
-            git push -f --set-upstream origin $BRANCH_NAME
-            echo Create pr!       
-            curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
+          git push -f --set-upstream origin $BRANCH_NAME
+          echo Create pr!       
+          curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
               -d "{\"title\":\"automatic update\", \"body\": \"Application update automatic pr\n ${DIFF_DESCRIPTION}  \", \"head\":\"${BRANCH_NAME}\",\"base\":\"production\"}"
