@@ -55,7 +55,7 @@ jobs:
           echo "new VERSION_MAJOR: $VERSION_MAJOR"
           echo "new VERSION_MINOR: $VERSION_MINOR"
 
-          filename="./demoApp/buildsystem/config.gradle"
+          filename="demoApp/buildsystem/config.gradle"
 
           #write the new version on the config file
           replaceMajor="        versionMajor : $VERSION_MAJOR,"
