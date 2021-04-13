@@ -77,8 +77,16 @@ jobs:
           
           DIFF_DESCRIPTION=$(git log --pretty=format:%s production..main)
           
+          #this will sanitize the log, but will look like $'Log', we will need to clear them below
+          CLEAN=$(printf '%q\n' "$DIFF_DESCRIPTION")
+          #this clears the final ''
+          CLEAN=${CLEAN%?}
+          #this removes the first 2 charachters
+          CHANGES=$(echo $CLEAN | awk '{print substr($0,3)}')
+
+
           echo "*************DIFF_DESCRIPTION***************"
-          echo $DIFF_DESCRIPTION
+          echo $CHANGES
           echo "********************************************"
                  
           TODAYS_DATE=$(date +%Y-%m-%d)
@@ -87,11 +95,7 @@ jobs:
         
           git push -f --set-upstream origin $BRANCH_NAME
           echo Create pr!
-          
-          CHANGES=$(printf '%q\n' "$DIFF_DESCRIPTION")
-          
-          #CHANGES="${DIFF_DESCRIPTION}"
-          
+         
           curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
