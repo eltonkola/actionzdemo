@@ -2,7 +2,7 @@
 ext.configuration = [
         applicationId : "com.okcupid.okcupid",
         versionMajor : 52,
-        versionMinor : 0,
+        versionMinor : 3,
         versionPatch : 555,
         versionCode : 1000,
         minimumSdkVersion : 21,
