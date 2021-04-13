@@ -74,6 +74,11 @@ jobs:
           
           #****************************
           #create new pr on production
+          echo "*************DIFF_DESCRIPTION***************"
+          echo $DIFF_DESCRIPTION
+          echo "********************************************"
+          
+          
           
           DIFF_DESCRIPTION=$(git log production..main --oneline --pretty=tformat:"%h %B" 2>&1)
           echo "$DIFF_DESCRIPTION"
