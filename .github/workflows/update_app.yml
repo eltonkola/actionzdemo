@@ -74,14 +74,14 @@ jobs:
           
           #****************************
           #create new pr on production
+          
+          
+          
+          DIFF_DESCRIPTION=$(git log production..main  --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches 2>&1)
+
           echo "*************DIFF_DESCRIPTION***************"
           echo $DIFF_DESCRIPTION
           echo "********************************************"
-          
-          
-          
-          DIFF_DESCRIPTION=$(git log production..main --oneline --pretty=tformat:"%h %B" 2>&1)
-          echo "$DIFF_DESCRIPTION"
                  
           TODAYS_DATE=$(date +%Y-%m-%d)
           BRANCH_NAME="publish_app_$TODAYS_DATE"
