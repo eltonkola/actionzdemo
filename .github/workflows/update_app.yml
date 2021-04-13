@@ -75,9 +75,7 @@ jobs:
           #****************************
           #create new pr on production
           
-          
-          
-          DIFF_DESCRIPTION=$(git log production..main  --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --branches 2>&1)
+          DIFF_DESCRIPTION=$(git log --pretty=format:%s production..main 2>&1)
 
           echo "*************DIFF_DESCRIPTION***************"
           echo $DIFF_DESCRIPTION
@@ -92,7 +90,7 @@ jobs:
           curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
-              -d "{\"title\":\"application update pr. ${DIFF_DESCRIPTION} \", \"body\": \"Application update automatic pr. \", \"head\":\"${BRANCH_NAME}\",\"base\":\"production\"}"
+              -d "{\"title\":\"application update pr - ${TODAYS_DATE} \", \"body\": \"Application update automatic pr.  ${DIFF_DESCRIPTION} \", \"head\":\"${BRANCH_NAME}\",\"base\":\"production\"}"
           echo Done!
           
       - name: Slack report
