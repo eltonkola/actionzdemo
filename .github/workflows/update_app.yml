@@ -56,6 +56,13 @@ jobs:
           echo "new VERSION_MINOR: $VERSION_MINOR"
 
           filename="./demoApp/buildsystem/config.gradle"
+          echo "current dir:"
+          echo pwd
+          if test -f "$FILE"; then
+           echo "$FILE exists."
+          else
+           echo "$FILE does not exist."
+          fi
 
           #write the new version on the config file
           replaceMajor="        versionMajor : $VERSION_MAJOR,"
