@@ -81,14 +81,14 @@ jobs:
           #this clears the final ''
           CLEAN=${CLEAN%?}
           #this removes the first 2 charachters
-          CHANGES=$(echo $CLEAN | awk '{print substr($0,3)}')
+          export CHANGES=$(echo $CLEAN | awk '{print substr($0,3)}')
 
           echo "*************DIFF_DESCRIPTION***************"
           echo $CHANGES
           echo "********************************************"
                  
           TODAYS_DATE=$(date +%Y-%m-%d)
-          BRANCH_NAME="publish_app_$TODAYS_DATE"
+          export BRANCH_NAME="publish_app_$TODAYS_DATE"
           git checkout -b $BRANCH_NAME
         
           git push -f --set-upstream origin $BRANCH_NAME
@@ -103,12 +103,12 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: BRANCH_NAME
+          branch: ${{ env.BRANCH_NAME }}
           delete-branch: true
           title: "App update pr"
           body: |
            Changelog:
-           $CHANGES
+           ${{ env.CHANGES }} 
           labels: |
             production
             automated pr
