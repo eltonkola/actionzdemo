@@ -91,9 +91,6 @@ jobs:
           TODAYS_DATE=$(date +%Y-%m-%d)
           export BRANCH_NAME="publish_app_$TODAYS_DATE"
           
-          #git checkout -b $BRANCH_NAME
-          #git push -f --set-upstream origin $BRANCH_NAME
-          #echo Create pr!
           git checkout production
 
   
