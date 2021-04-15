@@ -77,23 +77,21 @@ jobs:
       - name: Create pr
         run: |
 
-          DIFF_DESCRIPTION=$(git log --pretty=format:%s production..main 2>&1)
-
+          DIFF_DESCRIPTION=$(git log --merges --pretty=format:%b production..development)
+          #this will sanitize the log, but will look like $'Log', we will need to clear them below
+          CLEAN=$(printf '%q\n' "$DIFF_DESCRIPTION")
+          #this clears the final ''
+          CLEAN=${CLEAN%?}
+          #this removes the first 2 charachters
+          CHANGES=$(echo $CLEAN | awk '{print substr($0,3)}')
           echo "*************DIFF_DESCRIPTION***************"
-          echo $DIFF_DESCRIPTION
-          echo "********************************************"
-                 
-          TODAYS_DATE=$(date +%Y-%m-%d)
- 
-          
-          echo "*************POST_BODY***************"
-          echo $POST_BODY
+          echo $CHANGES
           echo "********************************************"
           
           curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
               -H "Accept: application/vnd.github.v3+json" \
               -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
-              -d "{\"title\":\"Application release \", \"body\": \"Changelog: ${DIFF_DESCRIPTION}\", \"head\":\"main\",\"base\":\"production\"}"
+              -d "{\"title\":\"Application release \", \"body\": \"Changelog: wip\", \"head\":\"main\",\"base\":\"production\"}"
       
           echo Done!
 
