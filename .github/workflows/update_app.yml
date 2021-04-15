@@ -103,7 +103,6 @@ jobs:
           commit-message: Application release ${TODAYS_DATE}
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          signoff: false
           base: main
           branch: production
           delete-branch: false
@@ -119,7 +118,7 @@ jobs:
           team-reviewers: |
             owners
             maintainers
-          draft: false
+          draft: true
             
       - name: Check outputs
         run: |
