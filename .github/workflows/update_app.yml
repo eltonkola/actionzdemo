@@ -94,31 +94,20 @@ jobs:
           #git checkout -b $BRANCH_NAME
           #git push -f --set-upstream origin $BRANCH_NAME
           #echo Create pr!
-       
-         
+
+  
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.8.2
+        uses: gr2m/create-or-update-pull-request-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Application release ${TODAYS_DATE}
-          committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          base: main
-          branch: appUpdate
-          delete-branch: false
-          title: App update pr
-          body: |
-           Changelog:
-           ${{ env.CHANGES }} 
-          labels: |
-            production
-            automated pr
+          title: "My pull request title"
+          body: "My pull request body"
+          branch: "production"
+          commit-message: "My commit message for uncommitted changes in lib/ folder"
+          author: "Lorem J. Ipsum <lorem@example.com>"
+          labels: production, botpr
           assignees: eltonkola
-          reviewers: eltonkola
-          team-reviewers: |
-            owners
-            maintainers
-          draft: true
             
       - name: Check outputs
         run: |
