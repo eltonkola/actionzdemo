@@ -77,7 +77,7 @@ jobs:
       - name: Create pr
         run: |
 
-          DIFF_DESCRIPTION=$(git log --merges --pretty=format:%b production..development)
+          DIFF_DESCRIPTION=$(git log --merges --pretty=format:%b production..main)
           #this will sanitize the log, but will look like $'Log', we will need to clear them below
           CLEAN=$(printf '%q\n' "$DIFF_DESCRIPTION")
           #this clears the final ''
