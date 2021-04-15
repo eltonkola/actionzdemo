@@ -91,9 +91,6 @@ jobs:
           TODAYS_DATE=$(date +%Y-%m-%d)
           export BRANCH_NAME="publish_app_$TODAYS_DATE"
           
-          git checkout production
-
-  
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
@@ -102,6 +99,7 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
+          base: production
           branch: main
           delete-branch: false
           title: '[Example] Update report'
