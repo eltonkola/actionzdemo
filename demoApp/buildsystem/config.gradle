@@ -2,7 +2,7 @@
 ext.configuration = [
         applicationId : "com.eltonkola.demoz",
         versionMajor : 22,
-        versionMinor : 39,
+        versionMinor : 40,
         versionPatch : 555,
         versionCode : 1000,
         minimumSdkVersion : 21,
