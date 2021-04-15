@@ -103,7 +103,8 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: $BRANCH_NAME
+          branch: ${{ BRANCH_NAME }}
+          base: production
           delete-branch: true
           title: "App update pr"
           body: |
