@@ -96,34 +96,34 @@ jobs:
        
          
       - name: Create Pull Request
-           uses: peter-evans/create-pull-request@v3
-           with:
-            token: ${{ secrets.GITHUB_TOKEN }}
-            commit-message: Application release ${TODAYS_DATE}
-            committer: GitHub <noreply@github.com>
-            author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-            signoff: false
-            branch: example-patches
-            delete-branch: true
-            title: $BRANCH_NAME
-            body: |
-              Changelog:
-              $CHANGES
-            labels: |
-              production
-              automated pr
-            assignees: eltonkola
-            reviewers: eltonkola
-            team-reviewers: |
-              owners
-              maintainers
-            milestone: 1
-            draft: false
+      - uses: peter-evans/create-pull-request@v3.8.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: Application release ${TODAYS_DATE}
+          committer: GitHub <noreply@github.com>
+          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+          signoff: false
+          branch: example-patches
+          delete-branch: true
+          title: $BRANCH_NAME
+          body: |
+           Changelog:
+           $CHANGES
+          labels: |
+            production
+            automated pr
+          assignees: eltonkola
+          reviewers: eltonkola
+          team-reviewers: |
+            owners
+            maintainers
+          milestone: 1
+          draft: false
             
-         - name: Check outputs
-           run: |
-             echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-             echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+      - name: Check outputs
+        run: |
+          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
 
 
       - name: Slack report
