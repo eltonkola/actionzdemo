@@ -93,15 +93,39 @@ jobs:
         
           git push -f --set-upstream origin $BRANCH_NAME
           echo Create pr!
-         
-          curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
-              -H "Accept: application/vnd.github.v3+json" \
-              -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
-              -d "{\"title\":\"Application release ${TODAYS_DATE}\", \"body\": \"Changelog: \\n ${CHANGES}\", \"head\":\"${BRANCH_NAME}\",\"base\":\"production\"}"
        
-      
-          echo Done!
-          
+         
+      - name: Create Pull Request
+           uses: peter-evans/create-pull-request@v3
+           with:
+            token: ${{ secrets.GITHUB_TOKEN }}
+            commit-message: Application release ${TODAYS_DATE}
+            committer: GitHub <noreply@github.com>
+            author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
+            signoff: false
+            branch: example-patches
+            delete-branch: true
+            title: $BRANCH_NAME
+            body: |
+              Changelog:
+              $CHANGES
+            labels: |
+              production
+              automated pr
+            assignees: eltonkola
+            reviewers: eltonkola
+            team-reviewers: |
+              owners
+              maintainers
+            milestone: 1
+            draft: false
+            
+         - name: Check outputs
+           run: |
+             echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
+             echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+
+
       - name: Slack report
         uses: kpritam/slack-job-status-action@v1
         with:
