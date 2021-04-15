@@ -104,10 +104,10 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          base: main
-          branch: production
+          base: production
+          branch: ${{ env.BRANCH_NAME }}
           delete-branch: true
-          title: ${{ env.BRANCH_NAME }}
+          title: App update pr
           body: |
            Changelog:
            ${{ env.CHANGES }} 
