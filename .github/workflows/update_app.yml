@@ -15,7 +15,7 @@ jobs:
         with:
           ref: main
 
-      - name: Create production pr
+      - name: Version Bump
         run: |
           echo "---set credentials---"
           git config credential.helper 'cache --timeout=120'
@@ -71,7 +71,8 @@ jobs:
           git add $filename
           git commit -m "version bump"
           git push
-          
+      - name: Create production pr
+        run: |        
           #****************************
           #create new pr on production
           
@@ -89,10 +90,10 @@ jobs:
                  
           TODAYS_DATE=$(date +%Y-%m-%d)
           export BRANCH_NAME="publish_app_$TODAYS_DATE"
-          git checkout -b $BRANCH_NAME
-        
-          git push -f --set-upstream origin $BRANCH_NAME
-          echo Create pr!
+          
+          #git checkout -b $BRANCH_NAME
+          #git push -f --set-upstream origin $BRANCH_NAME
+          #echo Create pr!
        
          
       - name: Create Pull Request
