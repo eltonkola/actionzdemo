@@ -103,9 +103,9 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           signoff: false
-          branch: example-patches
+          branch: $BRANCH_NAME
           delete-branch: true
-          title: $BRANCH_NAME
+          title: "App update pr"
           body: |
            Changelog:
            $CHANGES
@@ -117,7 +117,6 @@ jobs:
           team-reviewers: |
             owners
             maintainers
-          milestone: 1
           draft: false
             
       - name: Check outputs
