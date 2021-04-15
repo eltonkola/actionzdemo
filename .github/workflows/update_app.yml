@@ -104,7 +104,7 @@ jobs:
           committer: GitHub <noreply@github.com>
           author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
           base: main
-          branch: production
+          branch: appUpdate
           delete-branch: false
           title: App update pr
           body: |
