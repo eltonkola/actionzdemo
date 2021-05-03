@@ -34,13 +34,6 @@ jobs:
           VERSION_MAJOR=$(./demoApp/gradlew -p demoApp -q app:printVersionMajor | tail -n 1)
           VERSION_MINOR=$(./demoApp/gradlew -p demoApp -q app:printVersionMinor | tail -n 1)
 
-          #****************************
-          #update versions
-          echo "*********** current values ***********"
-          echo "Aspected month is: $ASPECTED_MONTH"
-          echo "Current month is: $TODAYS_MONTH"
-          echo "old VERSION_MAJOR: $VERSION_MAJOR"
-          echo "old VERSION_MINOR: $VERSION_MINOR"
 
           ASPECTED_MONTH=$((x=VERSION_MAJOR,y=12,z=x%y))
 
@@ -50,6 +43,15 @@ jobs:
           else
             VERSION_MAJOR=$((VERSION_MAJOR+1))
           fi
+
+          #****************************
+          #update versions
+          echo "*********** current values ***********"
+          echo "Aspected month is: $ASPECTED_MONTH"
+          echo "Current month is: $TODAYS_MONTH"
+          echo "old VERSION_MAJOR: $VERSION_MAJOR"
+          echo "old VERSION_MINOR: $VERSION_MINOR"
+
 
           echo "*********** update ***********"
           echo "new VERSION_MAJOR: $VERSION_MAJOR"
@@ -71,59 +73,29 @@ jobs:
           git add $filename
           git commit -m "version bump"
           git push
-      - name: Create production pr
-        run: |        
-          #****************************
-          #create new pr on production
-          
-          DIFF_DESCRIPTION=$(git log --pretty=format:%s production..main)
+   
+     
+            
+      - name: Create pr
+        run: |
+
+          DIFF_DESCRIPTION=$(git log --merges --pretty=format:%b production..main)
           #this will sanitize the log, but will look like $'Log', we will need to clear them below
           CLEAN=$(printf '%q\n' "$DIFF_DESCRIPTION")
           #this clears the final ''
           CLEAN=${CLEAN%?}
           #this removes the first 2 charachters
-          export CHANGES=$(echo $CLEAN | awk '{print substr($0,3)}')
-
+          CHANGES=$(echo $CLEAN | awk '{print substr($0,3)}')
           echo "*************DIFF_DESCRIPTION***************"
           echo $CHANGES
           echo "********************************************"
-                 
-          TODAYS_DATE=$(date +%Y-%m-%d)
-          export BRANCH_NAME="publish_app_$TODAYS_DATE"
           
-          #git checkout -b $BRANCH_NAME
-          #git push -f --set-upstream origin $BRANCH_NAME
-          #echo Create pr!
-       
-         
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3.8.2
-        with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          commit-message: Application release ${TODAYS_DATE}
-          committer: GitHub <noreply@github.com>
-          author: ${{ github.actor }} <${{ github.actor }}@users.noreply.github.com>
-          base: main
-          branch: production
-          delete-branch: false
-          title: App update pr
-          body: |
-           Changelog:
-           ${{ env.CHANGES }} 
-          labels: |
-            production
-            automated pr
-          assignees: eltonkola
-          reviewers: eltonkola
-          team-reviewers: |
-            owners
-            maintainers
-          draft: true
-            
-      - name: Check outputs
-        run: |
-          echo "Pull Request Number - ${{ steps.cpr.outputs.pull-request-number }}"
-          echo "Pull Request URL - ${{ steps.cpr.outputs.pull-request-url }}"
+          curl -v -u "eltonkola:${{ secrets.GITHUB_TOKEN }}" \
+              -H "Accept: application/vnd.github.v3+json" \
+              -X POST https://api.github.com/repos/eltonkola/actionzdemo/pulls \
+              -d "{\"title\":\"Application release \", \"body\": \"Changelog: wip\", \"head\":\"main\",\"base\":\"production\"}"
+      
+          echo Done!
 
 
       - name: Slack report
