@@ -34,13 +34,6 @@ jobs:
           VERSION_MAJOR=$(./demoApp/gradlew -p demoApp -q app:printVersionMajor | tail -n 1)
           VERSION_MINOR=$(./demoApp/gradlew -p demoApp -q app:printVersionMinor | tail -n 1)
 
-          #****************************
-          #update versions
-          echo "*********** current values ***********"
-          echo "Aspected month is: $ASPECTED_MONTH"
-          echo "Current month is: $TODAYS_MONTH"
-          echo "old VERSION_MAJOR: $VERSION_MAJOR"
-          echo "old VERSION_MINOR: $VERSION_MINOR"
 
           ASPECTED_MONTH=$((x=VERSION_MAJOR,y=12,z=x%y))
 
@@ -50,6 +43,15 @@ jobs:
           else
             VERSION_MAJOR=$((VERSION_MAJOR+1))
           fi
+
+          #****************************
+          #update versions
+          echo "*********** current values ***********"
+          echo "Aspected month is: $ASPECTED_MONTH"
+          echo "Current month is: $TODAYS_MONTH"
+          echo "old VERSION_MAJOR: $VERSION_MAJOR"
+          echo "old VERSION_MINOR: $VERSION_MINOR"
+
 
           echo "*********** update ***********"
           echo "new VERSION_MAJOR: $VERSION_MAJOR"
